@@ -4,13 +4,13 @@ import { UserController } from "./user.controller";
 
 const router =Router()
 
-router.post('/users',UserController.createUser)
-router.get("/users",UserController.getUser)
-router.get("/users/:id",UserController.getSingleUser)
+router.post('/',UserController.createUser)
+router.get("/",UserController.getUser)
+router.get("/:id",UserController.getSingleUser)
 
-router.put("/users/:id",UserController.updateUser)
+router.put("/:id",UserController.updateUser)
 
-router.delete('/users/:id',UserController.deleteUser );
+router.delete('/:id',UserController.deleteUser );
 
 
 
