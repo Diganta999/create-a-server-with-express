@@ -1,14 +1,17 @@
 import type { Request, Response } from "express";
 import { pool } from "../../db";
 import type { IUser } from "./user.interface";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 const createUser  = async(payload:IUser )=>{
     const {name,email,password,age}=payload;
+    const hashPassword = await bcrypt.hash(password, Number(config.salt_rounds));
     const result = await pool.query(`
            INSERT INTO users(name,email,password,age) VALUES($1,$2,$3,$4)     
-           RETURNING * 
-            `,[name,email,password,age])
-
+           RETURNING *
+            `,[name,email,hashPassword,age])
+             delete result.rows[0].password
             return result;
 }
 const getUser =async()=>{
