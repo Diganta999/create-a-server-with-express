@@ -37,6 +37,7 @@ const auth = () => {
                 });
                 return;
             }
+            req.user = decodedToken;
 
             next();
         } catch (error) {
@@ -44,7 +45,7 @@ const auth = () => {
                 message: "invalid token or unauthorized",
                 error
             });
-            return;
+            next(error)
         }
     }
 }
