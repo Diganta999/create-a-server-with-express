@@ -5,12 +5,12 @@ import bcrypt from "bcrypt";
 import config from "../../config";
 
 const createUser  = async(payload:IUser )=>{
-    const {name,email,password,age}=payload;
+    const {name,email,password,age,role,is_active}=payload;
     const hashPassword = await bcrypt.hash(password, Number(config.salt_rounds));
     const result = await pool.query(`
-           INSERT INTO users(name,email,password,age) VALUES($1,$2,$3,$4)     
+           INSERT INTO users(name,email,password,age,role,is_active) VALUES($1,$2,$3,$4,COALESCE($5,'USER'),COALESCE($6,true))     
            RETURNING *
-            `,[name,email,hashPassword,age])
+            `,[name,email,hashPassword,age,role,is_active])
              delete result.rows[0].password
             return result;
 }

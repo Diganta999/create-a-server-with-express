@@ -22,7 +22,7 @@ const createUser = async(req:Request,res:Response)=>{
 
 const getUser = async(req:Request,res:Response)=>{
       try {
-        console.log(req.user ,"token ")
+        
         const result = await UserService.getUser();
           res.status(200).json({
             message:"data retrieve successfully",
